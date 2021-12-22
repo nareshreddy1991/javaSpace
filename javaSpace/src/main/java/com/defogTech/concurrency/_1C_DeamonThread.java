@@ -6,7 +6,7 @@ when all the user threads die, JVM terminates this thread automatically.
 In simple words, we can say that it provides services to user threads for background supporting tasks. It has no role in life other than to serve user threads.
 Main thread is non deamon, Deaamon status will be inherited from parents.
  */
-public class _3_DeamonThread {
+public class _1C_DeamonThread {
 
     public static void main(String[] args) {
         new WorkerThread().start();// setDeamon(true) should be set before starting the thread

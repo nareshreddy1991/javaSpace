@@ -1,6 +1,6 @@
 package com.defogTech.concurrency;
 
-public class _1B_ThreadMethods {
+public class _1B1_ThreadMethods {
     public static void main(String[] args) {
         Thread t1= new Thread(()-> {
             ThreadUtils.sleep(500);
