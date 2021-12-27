@@ -1,5 +1,6 @@
 package com.defogTech.concurrency;
 /*
+Used to solve Producer and consumer problems
 Scenario - Print odd number using one thread and even numbers using some other thread
 numbers should be printed in sequence
 
@@ -15,7 +16,7 @@ the Thread gets interrupted and becomes runnable again
 the Thread wakes up for no reason at all i.e. it was neither notified nor interrupted
 The last case is known as a spurious wake-up and is one of the reasons why upon wake-up a Thread should always check whether the condition it was waiting for is true or not. If not, the Thread should call and go wait() again.
  */
-public class _2E1_ThreadCommunication {
+public class _2E1_ThreadCommunicationWaitNotify {
     public static void main(String[] args) throws InterruptedException {
         EventOddPrinter printer = new EventOddPrinter();
         Thread odd = new Thread(() -> printer.printOdd(),"Odd1");
