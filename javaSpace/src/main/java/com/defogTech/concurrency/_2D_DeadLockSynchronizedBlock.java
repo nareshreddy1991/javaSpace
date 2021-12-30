@@ -1,5 +1,8 @@
 package com.defogTech.concurrency;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -11,6 +14,35 @@ How to avoid deadlock
     - avoid nested locks
     - avoid unwanted locks
     - acquire object lock in the same order in all threads
+    - try to have timeouts while getting locks
+        lock.tryLock(2, TimeUnits.SECONDS)// if thread is not able to get lock in 2sec then it will return false, you can proceed accordingly
+//TODO deadlock can occur in the below code
+class AccountExample{
+    private void transfer(Account acc1, Account acc2, int amount){
+    //below line can avoid deadlock
+         Account acc1 = getLarger(from, to);
+        Account acc2= getSmaller(from, to);
+     //the above code can avoid the deadlock
+        synchronized (acc1){
+            synchronized (acc2){
+                acc1.deduct(amount);
+                acc2.add(amount);
+            }
+        }
+    }
+}
+Two threads are trying to access same method by passing two account objs in different order, it can leads to deadlock
+public void execute(){
+    new Thread(this::transfer(john, marie, 100)).start();
+    new Thread(this::transfer(marie, john, 100)).start();
+}
+**********************
+Getting thread dump:
+1) Using jstack (works in windows & linux)
+    Step:1) run jps command to list all the java processes & take the pid
+    step:2) run jstack pid > out.txt
+ 2)using jvisualvm also we see the thread dump(Tested in windows), it will come with jdk untill 1.8 for later version we need to download it separately.
+3) we can find deadlock using MxBean class -- see at the end
  */
 public class _2D_DeadLockSynchronizedBlock {
     static BookTicket3 bookTicket = new BookTicket3();//common resource for all the threads
@@ -22,7 +54,8 @@ public class _2D_DeadLockSynchronizedBlock {
         Thread t2 = new Thread(new BookingAgent4(bookTicket, popcorn));
         t1.start();
         t2.start();
-        t1.join();t2.join();
+        t1.join();
+        t2.join();
         System.out.println("Available seats:" + bookTicket.count());
         System.out.println("Available popcorns:" + popcorn.count());
     }
@@ -42,7 +75,7 @@ class BookingAgent3 implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Agent3 started for"+Thread.currentThread().getName());
+        System.out.println("Agent3 started for" + Thread.currentThread().getName());
         synchronized (bookTicket) {
             ThreadUtils.sleep(2);
             synchronized (popcorn) {
@@ -66,7 +99,7 @@ class BookingAgent4 implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Agent4 started for"+Thread.currentThread().getName());
+        System.out.println("Agent4 started for" + Thread.currentThread().getName());
         synchronized (popcorn) {
             ThreadUtils.sleep(2);
             synchronized (bookTicket) {// change the order of acquiring the lock to solve the deadlock issue
@@ -106,6 +139,18 @@ class BookPopcorn3 {
 
     public int count() {
         return popCornCount;
+    }
+}
+
+//we can find deadlock using below classes
+class DeadLockFinder {
+    public DeadLockFinder() {
+        ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+        long[] threadIds = threadMXBean.findDeadlockedThreads();
+        ThreadInfo[] threadInfo = threadMXBean.getThreadInfo(threadIds);
+        for (ThreadInfo info : threadInfo) {
+            //
+        }
     }
 }
 

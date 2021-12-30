@@ -24,6 +24,8 @@ TODO what is ideal pool size?
 For CPU intense task it should be same as number of cores in the system. (note the same core will be used by some other application as well)
 for I/O(db , network calls, files) it should be more than that because these threads will be in waiting state most of the time
 No of threads for IO depends on rate of task submitted & time taken to execute the tasks.
+
+ExecutorService extends Executor interface
  */
 public class _4A_ExecutorService {
     public static void main(String[] args) {
