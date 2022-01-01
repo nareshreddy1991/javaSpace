@@ -14,7 +14,7 @@ used in long running threads
 
 If any thread is in sleeping or waiting state (i.e. sleep() or wait() is invoked), calling the interrupt() method on the thread,
  breaks out the sleeping or waiting state throwing InterruptedException. If the thread is not in the sleeping or waiting state,
- calling the interrupt() method performs normal behaviour and doesn't interrupt the thread but sets the interrupt flag to true. Let's first see the methods provided by the Thread class for thread interruption.
+ calling the interrupt() method performs normal behaviour and doesn't interrupt the thread but sets the interrupt flag to true.
          */
 public class _1B2_InterreptingThread {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -37,7 +37,7 @@ public class _1B2_InterreptingThread {
 class PrintCounter implements Runnable {
 
     @Override
-    public void run() {// Run method can't throw checked exception, because parent is not throwing
+    public void run() {// Run method can't throw checked exception, because base method is not throwing
         int i = 0;
         while (true) {
             System.out.println(i++);

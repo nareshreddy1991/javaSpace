@@ -1,3 +1,9 @@
 Data Structures
     Synchronous Queue (defog)
     Exchanger (defog)
+    Queue / BlockingQueue(Used for producer & consumer)
+
+
+
+Questions:
+    Async Vs Reactive programming

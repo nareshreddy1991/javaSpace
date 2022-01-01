@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.IntStream;
 /*
-Object leve locking, for one object only one thread can acquire the lock.
+Object level locking, for one object only one thread can acquire the lock at a time.
 If we have multiple instance of same object then two threads can execute the same methods on two different objects
  */
 public class _2A_SynchronizedMethod {

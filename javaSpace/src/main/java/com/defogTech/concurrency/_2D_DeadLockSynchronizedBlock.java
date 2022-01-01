@@ -145,7 +145,7 @@ class BookPopcorn3 {
 //we can find deadlock using below classes
 class DeadLockFinder {
     public DeadLockFinder() {
-        ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+        ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();//TODO what is MXbeans?
         long[] threadIds = threadMXBean.findDeadlockedThreads();
         ThreadInfo[] threadInfo = threadMXBean.getThreadInfo(threadIds);
         for (ThreadInfo info : threadInfo) {

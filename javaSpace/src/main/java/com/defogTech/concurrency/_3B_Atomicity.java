@@ -10,7 +10,8 @@ foo = 65465498L;
 Indeed, the variable is written using two separate operations: one that writes the first 32 bits, and a second one which writes the last 32 bits.
 That means that another thread might read the value of foo, and see the intermediate state.
 
-Making the operation atomic consists in using synchronization mechanisms in order to make sure that the operation is seen, from any other thread, as a single, atomic (i.e. not splittable in parts), operation. That means that any other thread, once the operation is made atomic, will either see the value of foo before the assignment, or after the assignment. But never the intermediate value.
+Making the operation atomic consists in using synchronization mechanisms in order to make sure that the operation is seen, from any other thread, as a single, atomic (i.e. not splittable in parts), operation.
+That means that any other thread, once the operation is made atomic, will either see the value of foo before the assignment, or after the assignment.But never the intermediate value.
 
 A simple way of doing this is to make the variable volatile:
 

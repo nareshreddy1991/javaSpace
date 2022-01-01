@@ -13,13 +13,13 @@ public class _1A_CreatingThreads {
         System.out.println("jai Screen Rama");
         Thread runnableThread1= new Thread(new RunnableThread());
         runnableThread1.start();
-        Thread runnableThread2 = new Thread(() -> System.out.println("Java 8 lamdba thread is running"));
+        Thread runnableThread2 = new Thread(() -> System.out.println("Java 8 lambda thread is running"));
         runnableThread2.start();
         Thread thread1= new ThreadClassThread();
         thread1.start();
         //runnableThread2.start();//we can't start the thread twice, it will throw IllegalthreadStateException
         try {
-            runnableThread1.join();//main thread should wait untill this thread is finished
+            runnableThread1.join();//main thread should wait un till this thread is finished
             runnableThread2.join(500);
             thread1.join(500);//wait till 500ms otherwise proceed
         } catch (InterruptedException e) {

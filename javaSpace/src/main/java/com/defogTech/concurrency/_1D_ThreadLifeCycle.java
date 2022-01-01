@@ -9,8 +9,8 @@ It represents the waiting state. A thread will go to this state when it invokes 
 
 public static final Thread.State TIMED_WAITING
 It represents the timed waiting state. The main difference between waiting and timed waiting is the time constraint.
-Waiting has no time constraint, whereas timed waiting has the time constraint. A thread invoking the following method( sleep, join with timeout, wait with timeout, parkUntil, parkNanos)
-reaches the timed waiting state.
+Waiting has no time constraint, whereas timed waiting has the time constraint. A thread invoking the following method
+( sleep, join with timeout, wait with timeout, parkUntil, parkNanos) reaches the timed waiting state.
 
 public static final Thread.State TERMINATED
 It represents the final state of a thread that is terminated or dead. A terminated thread means it has completed its execution
