@@ -167,3 +167,15 @@ int first = ((Integer) list.get(0)).intValue();
 Future versions of Java might allow primitive data types for generics. Project Valhalla aims at improving the way generics are handled.
  The idea is to implement generics specialization as described in JEP 218.
  */
+
+
+
+
+
+
+/*
+    default <V> Function<V, R> compose(Function<? super V, ? extends T> before) { //TODO how??
+        Objects.requireNonNull(before);
+        return (V v) -> apply(before.apply(v));
+    }
+ */
