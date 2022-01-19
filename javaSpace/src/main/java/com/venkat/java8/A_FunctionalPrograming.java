@@ -48,7 +48,8 @@ which is, in fact, the true first-class citizen in Java.
     > Function Composition: Function composition refers to composing complex functions by combining simpler functions.
 Function interface also provides two default methods, compose and andThen, which will help us in function composition.
 default methods and, or, and negate in the Predicate interface provides function composition
-    >
+    >Monads?
+    >Curreying?
 
 ****************************
 Why Functional programming?

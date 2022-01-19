@@ -3,6 +3,7 @@ package com.venkat.java8;
 import java.util.*;
 import java.util.function.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /*
@@ -12,9 +13,6 @@ annotated with @functionalinterface, these support lambda's
  */
 public class B_NewFunctionalInterfacesInJava8 {
     public static void main(String[] args) {
-        Map<String, String> m= new HashMap<>();
-        m.put(null, null);
-        m.containsKey(null);
         Function<String, Integer> dd= String::length;
         dd.apply(null);
         //TODO Function
@@ -132,5 +130,8 @@ public class B_NewFunctionalInterfacesInJava8 {
 
         Function<String , String> compose = f1.compose(f2);
 
+        //
+        IntStream.range(0,100)
+                .forEach(System.out::println);
     }
 }
