@@ -56,6 +56,7 @@ public class F_CompletableFuture1 {
         try {
             System.out.println("Result" + cf.get()); //blocking operation
             System.out.println("Result" + cf.getNow(0)); //nonblocking operation, it gives default value if it is not done
+            System.out.println("Result" +cf.join());//blocking operation, no need to handle checked exception
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
