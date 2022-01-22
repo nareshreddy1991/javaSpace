@@ -1,22 +1,18 @@
-package com.java9to11;
-
-import com.defogTech.concurrency.ThreadUtils;
+package com.java9;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
 
 /*
 Jshell - interative programming is possible now in java
 private Methods in interfaces - large default methods can be split into smaller peaces
 java Module System -- moduling source code
 Process API improvements
-
+Reactive stream?
+Modularization
 
  */
 public class A_J9_Features {
