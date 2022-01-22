@@ -44,7 +44,7 @@ Support Asyn programming, non blocking
         exception -- oops nope              error channel
 
          */
-public class F_CompletableFuture1 {
+public class F3_CompletableFuture {
     public static void main(String[] args) {
         create()
                 .thenAccept(System.out::println)// accept is consumer is not returning anything
@@ -87,7 +87,6 @@ public class F_CompletableFuture1 {
         //TODO usage of accept
         create()
                 .thenAccept(System.out::println)// used to send emails,logging etc
-
                 .thenRun(() -> System.out.println("Successfully completed"));//telling above operations are successful
 
 
@@ -99,7 +98,7 @@ public class F_CompletableFuture1 {
         System.out.println("pipeline is prepared but nothing is flowing through it");
         cf3.complete(10);//push the value to pipeline, only after this operation CF will be evaluated
         ThreadUtils.sleep(1000);
-        cf3.complete(20);//not working TODO?
+        cf3.complete(20);//not working TODO? once cf is completed we can't complete again
 
         ThreadUtils.sleep(1000);
     }

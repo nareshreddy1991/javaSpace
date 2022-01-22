@@ -1,6 +1,5 @@
 package com.venkat.java8;
 
-import sun.rmi.transport.StreamRemoteCall;
 
 import java.util.ArrayList;
 import java.util.Arrays;

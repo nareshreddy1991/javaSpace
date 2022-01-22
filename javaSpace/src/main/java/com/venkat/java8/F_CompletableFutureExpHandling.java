@@ -1,5 +1,7 @@
 package com.venkat.java8;
 
+import com.defogTech.concurrency.ThreadUtils;
+
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -8,20 +10,22 @@ public class F_CompletableFutureExpHandling {
         //TODO exceptionally
         create()//exception is thrown
                 .thenApply(e -> e * 2)// this is skipped
-                .thenApply(e -> e + 1)
-                .exceptionally(throwable -> handler(throwable))//exception is catch here & recovered
+                .thenApply(e -> e + 1).exceptionally(throwable -> handler(throwable))//exception is catch here & recovered
                 .thenAccept(e -> System.out.println("Recovered:" + e)); // proceed from recovery
 
         //TODO lazy exceptionally
         CompletableFuture<Integer> cf = new CompletableFuture<>();
-        cf.thenApply(e -> e * 2)
-                .thenApply(e -> e + 1)
-                .exceptionally(throwable -> handler(throwable))
-                .thenAccept(e -> System.out.println("Lazy Recovered:" + e));
-        if (true)
-            cf.completeExceptionally(new Throwable());
+        cf.thenApply(e -> {
+            System.out.println("Running cf");
+            return e * 2;
+        }).thenApply(e -> {
+            System.out.println("Running cf in next step");
+            ThreadUtils.sleep(1000);
+            return e + 1;
+        }).exceptionally(throwable -> handler(throwable)).thenAccept(e -> System.out.println("Lazy Recovered:" + e));
+        if (true) cf.completeExceptionally(new Throwable());//complete the cf with exception
         else
-            cf.complete(10);
+            cf.complete(10);//completes cf normally, if we call complete & completeExceptionally only one will be successful
         //TODO timeout? java9
         //CompletableFuture has three states: Pending(how long...), Resolved, Rejected, once CF reaches Resolve or Rejected we can't change it
         //Dont do anything without timeout, java8 doesn't have any methods
@@ -29,25 +33,19 @@ public class F_CompletableFutureExpHandling {
         //cf.orTimeout(2, TimeUnit.SECONDS) //throws CompletionException
 
         //TODO handle
-        CompletableFuture completableFuture = CompletableFuture
-                .supplyAsync(() -> Integer.parseInt("s"))
-                .handle((result, e) -> { //recovered from the exception conditionally
-                    if (e != null) {
-                        System.out.println(e.getMessage());
-                        return "Error!";
-                    } else {
-                        return result + 1;
-                    }
-                })
-                .thenAccept(System.out::println);
+        CompletableFuture completableFuture = CompletableFuture.supplyAsync(() -> Integer.parseInt("s")).handle((result, e) -> { //recovered from the exception conditionally
+            if (e != null) {
+                System.out.println(e.getMessage());
+                return "Error!";
+            } else {
+                return result + 1;
+            }
+        }).thenAccept(System.out::println);
 
         //TODO
-        CompletableFuture<Void> completableFuture2 = CompletableFuture
-                .supplyAsync(() -> Integer.parseInt("s"))
-                .whenCompleteAsync((result, e) -> {//its a biconsumer so its not returning anything
-                    if (e != null) System.out.println(e.getMessage());
-                })
-                .thenAcceptAsync(System.out::println);
+        CompletableFuture<Void> completableFuture2 = CompletableFuture.supplyAsync(() -> Integer.parseInt("s")).whenCompleteAsync((result, e) -> {//its a biconsumer so its not returning anything
+            if (e != null) System.out.println(e.getMessage());
+        }).thenAcceptAsync(System.out::println);
     }
 
     private static Integer handler(Throwable throwable) {
@@ -56,15 +54,13 @@ public class F_CompletableFutureExpHandling {
     }
 
     private static Integer map(Integer e) throws RuntimeException {
-        if (true)
-            throw new RuntimeException();
+        if (true) throw new RuntimeException();
         return e * 1;
     }
 
     public static CompletableFuture<Integer> create() throws Exception {
         return CompletableFuture.supplyAsync(() -> {
-            if (true)
-                throw new RuntimeException();
+            if (true) throw new RuntimeException();
             return 10;
         });
     }
