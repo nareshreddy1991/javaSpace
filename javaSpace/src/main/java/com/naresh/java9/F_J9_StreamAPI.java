@@ -1,4 +1,4 @@
-package com.java9;
+package com.naresh.java9;
 
 import java.util.List;
 import java.util.stream.Stream;

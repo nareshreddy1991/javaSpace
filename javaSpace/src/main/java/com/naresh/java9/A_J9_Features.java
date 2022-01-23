@@ -1,4 +1,4 @@
-package com.java9;
+package com.naresh.java9;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -18,7 +18,9 @@ Modularization
 public class A_J9_Features {
     public static void main(String[] args) throws FileNotFoundException {
         //TODO creating immutable collections
-        List<Integer> immutableList = List.of(1, 2, 3);
+
+        //in of methods we should not pass null values, its thows NPE
+        List<Integer> immutableList = List.of(1, 2, 3);//throw NPE if any element is null
         List<Object> immutableList2 = List.of();
         Set<Object> of = Set.of();
         Map<String, String> key = Map.of("key", "Value", "key2", "Value2");
