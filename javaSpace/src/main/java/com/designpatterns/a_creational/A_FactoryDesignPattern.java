@@ -13,10 +13,16 @@ Advantages:
 For example, we can easily change PC class implementation because client program is unaware of this.
     3. Factory pattern provides abstraction between implementation and client classes through inheritance.
 
+Class design:
+                Computer <---------------------ComputerFactory
+                    |
+         |------------------------|
+         PC                     Laptop
+
  */
 public class A_FactoryDesignPattern {
     public static void main(String[] args) {
-        Computer pc = ComputerFactory.getComputer("PC", 100, 8);
+        Computer pc = ComputerFactory.getComputer("PC", 100, 8);//TODO too many args can cause noise
         Computer laptop = ComputerFactory.getComputer("Laptop", 500, 12);
 
         ComputerFactory factory = new ComputerFactory();
@@ -30,6 +36,7 @@ public class A_FactoryDesignPattern {
 
 class ComputerFactory {
     public static Computer getComputer(String type, Integer hdd, Integer ram) {
+        //TODO What if we have 20 parameters, 10 of them are optional??
         if (type.equals("PC")) return new PC(hdd, ram);
         else if (type.equals("Laptop")) return new Laptop(hdd, ram);
         return null;
