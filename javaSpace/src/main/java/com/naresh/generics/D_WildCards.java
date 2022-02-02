@@ -179,3 +179,8 @@ Future versions of Java might allow primitive data types for generics. Project V
         return (V v) -> apply(before.apply(v));
     }
  */
+
+/*
+TODO
+(T)super.invoke();
+ */

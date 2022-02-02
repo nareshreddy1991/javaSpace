@@ -32,8 +32,8 @@ public class A_StreamBasics {
         System.out.println("group1:" + group1);
 //        Map<String, Set<String>> group2 = strList.stream()
 //                .collect(Collectors.groupingBy(Function.identity(), Collectors.toSet())); //TODO error is coming?
-        TreeMap<String, Set<String>> group3 = strList.stream()
-                .collect(Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.toSet()));//TODO sometimes working sometimes compilation error
+//        TreeMap<String, Set<String>> group3 = strList.stream()
+//                .collect(Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.toSet()));//TODO sometimes working sometimes compilation error
 //        Map<String, String> group4 = strList.stream()
 //                .collect(Collectors.groupingBy(Function.identity(), Collectors.reducing("*", (a, b) -> a + b))); //TODo failing
 //        System.out.println("group4:"+group4);//group4:{Tinku=*Tinku, Lalitha=*Lalitha, Chareesh=*Chareesh, naresh=*nareshnaresh}
