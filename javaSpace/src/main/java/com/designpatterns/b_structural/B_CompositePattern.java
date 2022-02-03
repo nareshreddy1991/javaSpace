@@ -25,7 +25,7 @@ Composite design pattern treats each node in two ways:
 1) Composite – Composite means it can have other objects below it.
 2) leaf – leaf means it has no objects below it.
             C
-           /  \                 C - Composite, L - Leaft
+           /  \                 C - Composite, L - Leaf
           C     C
          /  \
         L   L
