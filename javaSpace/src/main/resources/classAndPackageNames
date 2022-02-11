@@ -1,5 +1,5 @@
-Cloneable -- java.lang
+java.lang -- Cloneable , Character
 
 collection
-java.util   List, ArrayList
+java.util   List, ArrayList, Scanner, Arrays
 
