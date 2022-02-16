@@ -18,12 +18,17 @@ Lower Bounded wild card: List<? super Integer> (Super classes of Integer ex: Int
 public class D_WildCards {
     public static void main(String[] args) {
         D_WildCards.unbounded();
+
+        Object o=101;
+        int a=3;
+        Object oo= a;//primitives are extending Object class, internally it will be boxed to Integer
     }
 
     //TODO upper bound
     //without using wildcard
     public <T extends Number> double processSum1(List<T> list) {
         double sum = 0.0;
+//        for (Number elem : list) { // this also works
         for (T elem : list) {
             sum += elem.doubleValue();
         }
@@ -43,7 +48,7 @@ public class D_WildCards {
     /*
     //TODO unbounded wild card, these are useful in below cases
     - If you are writing a method that can be implemented using functionality provided in the Object class.
-    - When the code is using methods in the generic class that don't depend on the type parameter. For example, List.size or List.clear.
+    - When the code is using methods in the generic class that don't depend on the type parameter(T). For example, List.size or List.clear.
  In fact, Class<?> is so often used because most of the methods in Class<T> do not depend on T
      */
 
@@ -60,6 +65,7 @@ public class D_WildCards {
         List<Integer> intLIst = new ArrayList<>();
         intLIst.add(10);//OK
         List<?> list2 = intLIst;
+//        list2.add(5); //java: incompatible types: int cannot be converted to capture#1 of ?
         for (Object o : list2) {
             System.out.println(o);
         }

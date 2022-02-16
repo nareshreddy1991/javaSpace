@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 
 /*
 RuntimeException can be narrowed/widen, any combination works fine
-For Checked Exception only we can narrow the scope.
+For Checked Exception only we can narrow the scope.(Parent throws Exception but child doesn't-- allowed, reverse is not allowed)
 
  TODO Dynamic (run time) polymorphism
   is the polymorphism existed at run-time. Here, Java compiler does not understand which method is called at compilation time.
@@ -95,6 +95,9 @@ class CarCompany {
         return 2500;
     }
 
+    public void test(){
+
+    }
     public boolean isParent() {
         return true;
     }
@@ -151,6 +154,10 @@ class BmwCarCompany extends CarCompany {
         return 250;
     }
 
+    @Override
+    public void test() /*throws Exception*/{ // parent is not throwing Exception, so child cant throw Checked Exception
+
+    }
 
     public String getLocation() {
         return "Chennai";

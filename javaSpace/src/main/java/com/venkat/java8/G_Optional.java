@@ -38,6 +38,9 @@ public class G_Optional {
         Optional<Optional<String>> po2 = po.map(Person::getName);
         Optional<String> po3 = po2.orElse(null);
         String name = po3.orElse(null);
+        //getting person name
+        Person person = po.orElse(null);
+        person.getName();
         //using flatMap
         Optional<String> nameOp = po.flatMap(Person::getName);
         String name2 = nameOp.orElse(null);

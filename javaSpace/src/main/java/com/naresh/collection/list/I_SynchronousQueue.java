@@ -22,11 +22,27 @@ public class I_SynchronousQueue {
 
 //        synchronousQueue.remove(); // throws NoSuchElementException
         System.out.println("poll"+synchronousQueue.poll());//return null
-        try {
+      /*  try {
             synchronousQueue.take();// wait untill some thread give a value
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        System.out.println(synchronousQueue);
+        System.out.println("another thread is waiting to take");
+        new Thread(()-> {
+            try {
+                System.out.println("Element is taken:"+synchronousQueue.take());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        try {
+            System.out.println("Trying to insert element");
+            synchronousQueue.put(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         System.out.println(synchronousQueue);
+
     }
 }

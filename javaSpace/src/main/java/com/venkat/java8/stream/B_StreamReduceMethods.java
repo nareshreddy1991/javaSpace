@@ -29,8 +29,6 @@ public class B_StreamReduceMethods {
 
         Optional<Integer> collect4 = integerList.stream()
                 .collect(Collectors.reducing(Integer::sum));
-//        integerList.stream()
-//                .collect(Collectors.reducing("0",(identify, value)-> Integer.valueOf(identify)+value,Integer::sum)); //not working
 
         //reduce
         Integer sum2 = integerList.stream() //if strema is empty then identity value will be returned
@@ -69,6 +67,9 @@ public class B_StreamReduceMethods {
 
         intList.stream()//stream<String>
                 .reduce(0, (sum1, value) -> sum1 + Integer.valueOf(value), Integer::sum);
+
+        integerList.stream()
+                .collect(Collectors.reducing("0",(identify, value)-> identify+value.toString())); //no combiner no error todo how? types are different
 
         //below code will not compile
         // we have a stream of User objects, and the types of the accumulator arguments are Integer and User. However, the accumulator implementation is a sum of Integers,

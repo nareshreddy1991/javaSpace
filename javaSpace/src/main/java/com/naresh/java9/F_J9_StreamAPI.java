@@ -12,12 +12,16 @@ elements of a stream after dropping a subset of elements that matches the given 
  */
 public class F_J9_StreamAPI {
     public static void main(String[] args) {
-        Stream.of("India", "Australia", "Newzealand", "", "South Africa", "England").takeWhile(o -> !o.isEmpty()).forEach(System.out::print);//output:IndiaAustraliaNewzealand
+        Stream.of("India", "Australia", "Newzealand", "", "South Africa", "England")
+                .takeWhile(o -> !o.isEmpty())
+                .forEach(System.out::print);//output:IndiaAustraliaNewzealand
         System.out.println();
-        Stream.of("India", "Australia", "Newzealand", "", "England", "Srilanka").dropWhile(o -> !o.isEmpty())//TODO drop when condition is true untill predicate return false
+        Stream.of("India", "Australia", "Newzealand", "", "England", "Srilanka")
+                .dropWhile(o -> !o.isEmpty())//TODO drop when condition is true untill predicate return false
                 .forEach(System.out::print);//EnglandSrilanka
         System.out.println();
-        Stream.of("India", "", "Australia", "", "England", "Srilanka").dropWhile(o -> !o.isEmpty())//it will get all non empty string after first false condition
+        Stream.of("India", "", "Australia", "", "England", "Srilanka")
+                .dropWhile(o -> !o.isEmpty())//it will get all non empty string after first false condition
                 .forEach(System.out::print);//AustraliaEnglandSrilanka
         System.out.println();
         List<Integer> numbers = List.of(4, 1, 6, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -42,13 +46,13 @@ public class F_J9_StreamAPI {
         System.out.println("\nDropwhile");
         numbers.stream().dropWhile(e -> e < 5)//getting undeterministic results 623456789
                 .forEach(System.out::print);
-
+        System.out.println();
         //TODO iterate overloaded method
         Stream.iterate(0, i -> i < 10, i -> i + 1)
                 .forEach(System.out::println);
         //TODO ofNullable
 //        Stream.of(null);// throws NPE
         Stream.ofNullable(null)
-                .forEach(System.out::println);//since stream is empty it will not print anything
+                .forEach(System.out::println);//since stream is empty it will not print anything?? todo its working fine
     }
 }

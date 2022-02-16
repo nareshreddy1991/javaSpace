@@ -2,9 +2,7 @@ package com.venkat.java8;
 
 import java.util.*;
 import java.util.function.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
+import java.util.stream.*;
 
 /*
 New Functional interfaces introduced in java8
@@ -14,7 +12,7 @@ annotated with @functionalinterface, these support lambda's
 public class B_NewFunctionalInterfacesInJava8 {
     public static void main(String[] args) {
         Function<String, Integer> dd= String::length;
-        dd.apply(null);
+//        dd.apply(null); //NPE will be thrown
         //TODO Function
         Function<String, Integer> function1 = s -> Integer.valueOf(s); //Function<T,R>
         Function<Double, String> function2 = s -> String.valueOf(s); //Function<T,R>
@@ -75,12 +73,13 @@ public class B_NewFunctionalInterfacesInJava8 {
         String sx = maxLengthString.apply("two", "three");
 
         //TODO few other interfaces introduced in java8
-        /*                  Int Version            Long Version             Double Version
-        BinaryOperator      IntBinaryOperator       LongBinaryOperator    DoubleBinaryOperator
-        Consumer            IntConsumer             Long..                ..
-        Function            IntFunction             ..                     ..
-        Predicate           IntPredicate            ..
-        Supplier            IntSupplier             ..                     ..
+        /*                  Int Version           Long Version             Double Version
+        UnaryOperator       IntUnaryOperator        LongUnaryFunction     DoubleUnaryOperator   (take double and return double)
+        BinaryOperator      IntBinaryOperator       LongBinaryOperator    DoubleBinaryOperator (take two double values return double)
+        Consumer            IntConsumer             Long..                ..                    (Take double val)
+        Function            IntFunction             ..                     ..                   (Take double val return anything)
+        Predicate           IntPredicate            ..                      ..                  (take double val return boolean)
+        Supplier            IntSupplier             ..                     ..                   (return Double value)
          */
 
         /*
@@ -88,7 +87,6 @@ public class B_NewFunctionalInterfacesInJava8 {
             Double                      Int                     Long
         DoubleToIntFunction         IntToDoubleFunction     LongToDoubleFunction (it will convert Long to double)
         DoubleToLongFunction        IntToLongFunction       LongToIntFunction
-        DoubleUnaryOperator         IntUnaryOperator        LongUnaryFunction
          */
 
         /*
@@ -100,7 +98,7 @@ public class B_NewFunctionalInterfacesInJava8 {
          */
 
         /*
-        ObjDoubleConsumer (it will accept Obj, double value and doesn't return anything
+        ObjDoubleConsumer (it will accept (T), double value and doesn't return anything
         ObjIntConsumer
         ObjLongConsumer
          */
@@ -128,10 +126,26 @@ public class B_NewFunctionalInterfacesInJava8 {
         Function<Number, String> f1 = n -> String.valueOf(n);
         Function<Object, Integer> f2 = n -> 10; // Function<? super V,
 
-        Function<String , String> compose = f1.compose(f2);
+        Function<Object , String> c1 = f1.compose(f2);
+        Function<String , String> c2 = f1.compose(f2);
 
         //
-        IntStream.range(0,100)
+        IntStream.range(0,100) //0-99
                 .forEach(System.out::println);
+        IntStream.rangeClosed(0,100) //0-100
+                .forEachOrdered(System.out::println);
+        IntStream.generate(()->10).forEach(System.out::println);//infinite stream, 10 will be keep printing
+        IntStream.iterate(0,i->++i);//infinite stream, we can stop using limit(100)
+        IntStream.iterate(0,i->i<10,i->++i);// 0-9
+
+        LongStream.range(0,100);
+        LongStream.rangeClosed(0,100);
+        LongStream.generate(()->10);
+        LongStream.iterate(0,i->++i);
+        LongStream.iterate(0,i->i<10,i->++i);
+
+        DoubleStream.generate(()->10);
+        DoubleStream.iterate(0.0,i->++i);
+        DoubleStream.iterate(0.0,i->i<10,i->i=i+0.5);
     }
 }

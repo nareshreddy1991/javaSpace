@@ -7,16 +7,17 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 /*
-Classloader is a subsystem of JVM which is used to load class files. Whenever we run the java program, it is loaded first by the classloader. There are three built-in classloaders in Java.
+Classloader is a subsystem of JVM which is used to load class files. Whenever we run the java program, it is loaded first by the classloader.
+There are three built-in classloaders in Java.
 
 Bootstrap ClassLoader: This is the first classloader which is the super class of Extension classloader. It loads the rt.jar file which contains all class files of Java Standard Edition like java.lang package classes, java.net package classes, java.util package classes, java.io package classes, java.sql package classes etc.
 Extension ClassLoader: This is the child classloader of Bootstrap and parent classloader of System classloader. It loades the jar files located inside $JAVA_HOME/jre/lib/ext directory.
 System/Application ClassLoader: This is the child classloader of Extension classloader. It loads the classfiles from classpath. By default, classpath is set to current directory. You can change the classpath using "-cp" or "-classpath" switch. It is also known as Application classloader
  Bootstrap ClassLoader(first it will load all jvm related classes in rt.jar)
            |
-  Extension ClassLoader
+  Extension ClassLoader(JAVA_HOME/jre/lib/ext)
             |
-System/Application ClassLoader(classes written by us)
+System/Application ClassLoader(classes written by us, from classpath)
 
  */
 public class A_ClassLoader {
@@ -26,7 +27,7 @@ public class A_ClassLoader {
 //        System.out.println("Our class Loader:"+Logging.class.getClassLoader());//Launcher$ExtClassLoader@3caeaf62
         System.out.println("Our class Loader:" + String.class.getClassLoader());//null - String is loaded by Bootstrap classloader
         System.out.println("Our class Loader:" + ArrayList.class.getClassLoader());//null - String is loaded by Bootstrap classloader
-        //for Sting & ArrayList is itloaded by Booststrap, it is showing as null because it was written in Navtive code
+        //for Sting & ArrayList is it is loaded by Bootstrap, it is showing as null because it was written in Native code
     }
 }
 

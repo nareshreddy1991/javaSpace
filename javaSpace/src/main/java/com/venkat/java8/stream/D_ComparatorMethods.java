@@ -16,7 +16,10 @@ public class D_ComparatorMethods {
         Collections.sort(employeeData, comparator);
 
         //java8
-        Collections.sort(employeeData, Comparator.comparing(Employee::getEmpName));//sort in asc
+        Comparator<Employee> comparing = Comparator.comparing(Employee::getEmpName);
+        //TODO imp to sort an object in natural order/reverse order that class mush implement Comparable
+//        Comparator<Employee> comparing2 = Comparator.<Employee>naturalOrder();
+        Collections.sort(employeeData, comparing);//sort in asc
         System.out.println("asc" + employeeData);
         Collections.sort(employeeData, Comparator.comparing(Employee::getEmpName, Comparator.reverseOrder()));//sort in desc
         System.out.println("desc" + employeeData);

@@ -53,7 +53,7 @@ The orTimeout() method can be used to specify that if a given task doesn't compl
                 .thenAccept(e -> System.out.println("Timeout Result:" + e));
         cf.completeOnTimeout(-1, 1, TimeUnit.SECONDS); // in java9 we have this method, if CF is not completed then return -1
 
-/*        cf.orTimeout(1, TimeUnit.SECONDS); //throws TimeoutException, but this exception we cant catch in completableStage
+/*        cf.orTimeout(1, TimeUnit.SECONDS); //throws TimeoutException, but this exception we cant catch in completableStage TODO need to check?
         cf.join();// calling this method throws TimeoutException*/
         ThreadUtils.sleep(3000);
         /*

@@ -23,9 +23,11 @@ public class C_SubTypesInheritance {
         //wildcard
         List<Integer> ilist = new ArrayList<>();
         List<Number> nlist = new ArrayList<>();
+        List noTypeList= new ArrayList();
 //        nlist= ilist;// both are different types
         List<?> w1List = ilist;
         List<?> w2List = nlist;
+        List<?> noType= noTypeList;
 
     }
 
@@ -42,7 +44,8 @@ public class C_SubTypesInheritance {
 }
 
 // we can inherite
-interface PayloadList<E, P> extends List<E> {// though E is not used in setPayload we need to define it
+//interface PayloadList<E, P> extends List<E> {// though E is not used in setPayload we need to define it
+interface PayloadList<P> extends List {// if you need to remove E- remove in both places
 
     void setPayload(int index, P val);
 }

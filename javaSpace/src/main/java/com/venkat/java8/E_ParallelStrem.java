@@ -75,7 +75,7 @@ public class E_ParallelStrem {
                 /*
                 Reduce doesn't take initial value, it takes identity value
                 int + identity is 0 x+0=x  (for addition 0 is identity, it will work fine in parallel stream)
-                int * identity is 1 x*1=x
+                int * identity is 1 x*1=x   (for multiplication 1 is identity value)
                  */
         //TODO How many threads should I create?
         /*

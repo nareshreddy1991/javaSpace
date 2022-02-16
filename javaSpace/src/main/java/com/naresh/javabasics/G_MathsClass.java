@@ -7,6 +7,7 @@ public class G_MathsClass {
         System.out.println(Math.round(25.3f));//25
         System.out.println(Math.abs(-25.3));//25.3
         System.out.println(Math.max(10, 20));//20
+        System.out.println(Math.log(10));//2.3..
         //we have few other methods
     }
 }

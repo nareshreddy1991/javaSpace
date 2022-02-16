@@ -6,7 +6,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 /*
 CompletionStage Interface
-java.util.concurrent.CompletionStage<T> interface represents a commutation task (either synchronous or asynchronous).
+java.util.concurrent.CompletionStage<T> interface represents a computation task (either synchronous or asynchronous).
  As all methods declared in this interface return an instance of CompletionStage itself, multiple CompletionStages can be chained together in different ways to
   complete a group of tasks.
 

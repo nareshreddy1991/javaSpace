@@ -53,8 +53,11 @@ interface Pair<K, V> {
 
     public V getValue();
 }
+interface Pair1{}
 
 //class OrderedPair<K, V> implements Pair { -- this is allowed
+//class OrderedPair<K, V> implements Pair1 { -- THis is allowed
+//class OrderedPair<K, V> implements Pair1<K,V> { -- THis is not allowed, Pair1 doent have k V
 class OrderedPair<K, V> implements Pair<K, V> {
 
     private K key;

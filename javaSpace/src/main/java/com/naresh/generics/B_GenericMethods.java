@@ -80,8 +80,10 @@ public class B_GenericMethods {
         }
         return count;
     }
-    /*
-    Wild Card:
 
-     */
+    public void test(){
+
+//        compareGreaterThan(new int[]{5},5); //we cant pass int[], int to type T, only wrappers or classes are allowed
+    }
+
 }

@@ -1,12 +1,15 @@
 package com.naresh.javabasics;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Spliterator;
 import java.util.stream.IntStream;
 
 public class F_ArraysClass {
     public static void main(String[] args) {
+        //        int[] source= new int[10]{5,6,8,5,4,8,62,5,8,6}; //TODO illegal - both dimension & values cant be given
+
         List<Integer> list = Arrays.asList(1, 2, 3);//return fixe sized array, add/remove not allowed
         list.set(0, 5);//we can still replace tha values
 
@@ -25,6 +28,7 @@ public class F_ArraysClass {
 
         int compare2 = Arrays.compareUnsigned(array1, array2);
         System.out.println("compare unassigned result:" + compare2);//TODO ??
+
         //TODO copy of - it will give new Array always
         int[] newArray = Arrays.copyOf(array1, 2);//first two elements of given array
         System.out.println("new array:");
@@ -48,9 +52,20 @@ public class F_ArraysClass {
         for (int i : ints)
             System.out.print(i);
 
-        Arrays.sort(array1);
+        int[] sarray = new int[]{58,25,55,2,9,10, 25, 35, 37};
+        System.out.println("befor sorting"+sarray);
+//        Arrays.sort(sarray);//return type is void
+        Arrays.sort(sarray, 1,5);//sort from fromIndext to toIndex(exclusive)
+        System.out.println("after sortingL"+sarray.toString());
+        Arrays.stream(sarray).forEach(System.out::println);
+//        Arrays.sort(array1, Comparator.reverseOrder()); //TODO compilation error int[] are not allowed to sort, expecting T[]
 
-        Spliterator.OfInt spliterator = Arrays.spliterator(array1);
+        Integer[] a= new Integer[]{1,5,4,0}; //TODO int is not T but Integer is
+        Arrays.sort(a,  Comparator.reverseOrder());//throw NPE if no elements in the array
+
+//        Integer[] b= new int[5]; //not supported
+
+        Spliterator.OfInt spliterator = Arrays.spliterator(sarray);
 
 
     }
