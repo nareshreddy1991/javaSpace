@@ -56,6 +56,9 @@ public class F_ArraysClass {
         System.out.println("befor sorting"+sarray);
 //        Arrays.sort(sarray);//return type is void
         Arrays.sort(sarray, 1,5);//sort from fromIndext to toIndex(exclusive)
+        Arrays.parallelSort(sarray);//from java8
+        Integer[] t= new Integer[]{5,68,74};
+        Arrays.sort(t, Comparator.naturalOrder());//onlyt T[] can be sorted using comparator not primitives
         System.out.println("after sortingL"+sarray.toString());
         Arrays.stream(sarray).forEach(System.out::println);
 //        Arrays.sort(array1, Comparator.reverseOrder()); //TODO compilation error int[] are not allowed to sort, expecting T[]
