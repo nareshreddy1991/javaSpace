@@ -1,5 +1,11 @@
 package com.naresh.datastructures.b_linkedlist;
 
+/*
+Adv:
+    - can travel in both direction
+    - can delete nodes easily because we have access to previous nodes
+    - we can implement various data strus
+ */
 public class B_DoubleLinkedList {
     public static void main(String[] args) {
         DoubleLinkedList dll = new DoubleLinkedList();
@@ -7,6 +13,11 @@ public class B_DoubleLinkedList {
         dll.add("20");
         dll.add("30");
         dll.add("40", 3);
+        dll.add("50");
+        dll.printAll();
+        dll.pop();
+        dll.remove(0);
+        dll.remove("20");
         dll.printAll();
 
     }
@@ -85,6 +96,26 @@ class DoubleLinkedList {
         if (curr == null || curr.next == null) return;
         curr.next = curr.next.next;
         curr.next.previous = curr;
+    }
+
+    public void remove(String data) {
+        if (data.equals(head.data)) {
+            head = head.next;
+            head.previous = null;
+            return;
+        }
+        Node curr = head.next;
+        Node previous = head;
+        while (curr != null) {
+            if (data.equals(curr.data)) {
+                previous.next = curr.next;
+                if (curr.next != null)
+                    curr.next.previous = previous;
+                break;
+            }
+            previous = curr;
+            curr = curr.next;
+        }
     }
 
     public void printAll() {
