@@ -13,6 +13,12 @@ I tried below approach that didn't work:
    |          5 5|1 5 2           |
    +-----------------------------+
            <--r|       |f-->(when full go to start of the queue)
+
+Current approach:
+   +-----------------------------+
+   |5             |             1 |
+   +-----------------------------+
+   |front(initial 0)            |rear(initail-capacity-1)
  */
 public class E_DequeCircularArray {
     public static void main(String[] args) {
@@ -76,8 +82,7 @@ class DequeCircularArray {
         }
         if (front == 0) {
             front = capacity - 1;
-        }
-        else {
+        } else {
             front--;
         }
         int data = array[front];//first we need to decrement & get the value othewise, it will get next position default value
@@ -92,8 +97,7 @@ class DequeCircularArray {
         }
         if (rear == capacity - 1) {
             rear = 0;
-        }
-        else {
+        } else {
             rear++;
         }
         int data = array[rear];
@@ -106,7 +110,11 @@ class DequeCircularArray {
             System.out.println("queue is empty");
             return -1;
         }
-        return array[front];//TODO this will not work - we need to decrease the value and then get it
+        if (front == 0)
+            front = capacity - 1;
+        else
+            front--;
+        return array[front];
     }
 
     public int getLast() {
@@ -114,6 +122,10 @@ class DequeCircularArray {
             System.out.println("queue is empty");
             return -1;
         }
+        if (rear == capacity - 1)
+            rear = 0;
+        else
+            rear++;
         return array[rear];
     }
 
