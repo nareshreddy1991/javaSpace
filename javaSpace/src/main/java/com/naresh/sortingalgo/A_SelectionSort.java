@@ -16,10 +16,11 @@ public class A_SelectionSort {
     /*
     Selection sort: complexity: O(n^2)
     5, 8, 7, 4, 6 <----input (compare 5 with all elements)
-    (4), 8, 7, 5, 6
-    (4), (5), 8, 7, 6
-    (4), (5), (6), 8, 7
-    (4), (5), (6), (7), 8 (5 elements were sorted in 4 iterations)
+ sorted     unsorted
+    (4) | 8, 7, 5, 6
+    (4), (5) | 8, 7, 6
+    (4), (5), (6) | 8, 7
+    (4), (5), (6), (7) | 8 (5 elements were sorted in 4 iterations)
 
     4A 5 3 2 4B 1 <-- input
     1 5 4A 3 4B 2

@@ -18,6 +18,11 @@ public class C_InsertionSort {
         int[] array = new int[]{5, 8, 7, 4, 6, 8, 5, 4, 2, 3, 1, 2, 5};
         insertionSort(array);
         Arrays.stream(array).forEach(f -> System.out.print(f + " "));
+
+        System.out.println("\nInsertion sort recursion");
+        int[] array2 = new int[]{5, 8, 7, 4, 6, 8, 5, 4, 2, 3, 1, 2, 5};
+        insertionSortRecursion(array2,array2.length);
+        Arrays.stream(array2).forEach(f -> System.out.print(f + " "));
     }
 
     /*
@@ -39,6 +44,31 @@ public class C_InsertionSort {
             }
             array[j + 1] = key;
         }
+    }
+
+    //TODO felt difficult - work on it/find another approach
+    public static void insertionSortRecursion(int[] arr, int n) {
+
+        // Base case
+        if (n <= 1)
+            return;
+
+        // Sort first n-1 elements
+        insertionSortRecursion(arr, n - 1);
+
+        // Insert last element at its correct position
+        // in sorted array.
+        int last = arr[n - 1];
+        int j = n - 2;
+
+        /* Move elements of arr[0..i-1], that are
+          greater than key, to one position ahead
+          of their current position */
+        while (j >= 0 && arr[j] > last) {
+            arr[j + 1] = arr[j];
+            j--;
+        }
+        arr[j + 1] = last;
     }
     /*
 What is Binary Insertion Sort?
