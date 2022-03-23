@@ -1,0 +1,4 @@
+country,columnName,mandatory,lengthCheck,length,specialCharsCheck
+INDIA,PAYTRXKEY,Y,Y,20,Y
+INDIA,GROUP_ID,Y,Y,20,Y
+INDIA,FILE_NAME,Y,Y,20,Y
