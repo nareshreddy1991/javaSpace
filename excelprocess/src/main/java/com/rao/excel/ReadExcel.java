@@ -14,7 +14,7 @@ public class ReadExcel {
         try {
             List<CountryRulesVO> countryRulesList = ReadCountryRules.loadCountryRules();
             Map<String, CountryRulesVO> countryMap = countryRulesList.stream()
-                    .collect(Collectors.toMap(e -> String.join("-", e.getCountry(), e.getColumnName()).toUpperCase(),
+                    .collect(Collectors.toMap(e -> String.join("-", e.getCountry(), e.getColumnName(), e.getTemplate()).toUpperCase(),
                             Function.identity(), (a, b) -> a));
 
             Workbook workbook = WorkbookFactory.getWorkbook();
@@ -27,23 +27,22 @@ public class ReadExcel {
             Iterator<Row> rowIterator = sheet.iterator();
             Row headerRow = rowIterator.next();
             List<String> headerList = getHeaders(headerRow);
-            int statusColPosition = headerList.size() + 1;
+            int statusColPosition = 0;
             Cell sourceCell = headerRow.cellIterator().next();
             WorkbookFactory.writeHeaders(headerList, newSheet, sourceCell);
-            String country = "India";
             int rowNum = 1;
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
-                Iterator<Cell> cellIterator = row.cellIterator();
                 Row newRow = newSheet.createRow(rowNum++);
-                int colNum = 0;
                 Boolean rowStatus = null;
-                StringBuffer rowErrorMsg = new StringBuffer();
-                while (cellIterator.hasNext()) {
+                StringBuffer rowErrorMsg = new StringBuffer();//10 0-9 ,12 212
+                for (int colNum = 2; colNum < headerList.size(); colNum++) {
                     String header = headerList.get(colNum);
-                    String key = String.join("-", country, header);
-                    CountryRulesVO countryRulesVO = countryMap.get(key.toUpperCase());
-                    Cell cell = cellIterator.next();
+                    CountryRulesVO countryRulesVO = getCountryRules(headerList, header, countryMap, row);
+                    Cell cell = row.getCell(colNum - 2);
+                    if (cell == null) {
+                        return;
+                    }
                     Cell newCell = newRow.createCell(colNum);
                     Boolean cellResult = null;
                     switch (cell.getCellType()) {
@@ -57,16 +56,11 @@ public class ReadExcel {
                             cellResult = CellRulesProcessor.validateCell(cell.getStringCellValue(), countryRulesVO, rowErrorMsg, header);
                             newCell.setCellValue(cell.getStringCellValue());
                             break;
-//                        case CELL_TYPE_BOOLEAN:
-//                            System.out.print(cell.getBooleanCellValue() + "t");
-//                            newCell.setCellValue(cell.getBooleanCellValue());
-//                            break;
                     }
                     WorkbookFactory.cloneStyle(cell, newCell);
                     if (cellResult != null && rowStatus == null /*|| rowStatus*/) {
                         rowStatus = cellResult == true;
                     }
-                    colNum++;
                 }
                 System.out.println("new line");
                 Cell statusCell = newRow.createCell(statusColPosition);
@@ -94,6 +88,26 @@ public class ReadExcel {
             headerList.add(cell.getStringCellValue());
         }
         return headerList;
+    }
+
+    private static CountryRulesVO getCountryRules(List<String> headerList, String header, Map<String, CountryRulesVO> countryMap, Row row) {
+        int position = headerList.indexOf("PAYCTRYCODE");
+        String template = "T1";
+        if (position < 0) {
+            position = headerList.indexOf("DEBIT COUNTRY CODE");
+            template = "T2";
+        }
+        CountryRulesVO countryRulesVO = null;
+        if (position > 0) {
+            Cell country = row.getCell(position - 2);
+            if (country != null) {
+                String key = String.join("-", country.getStringCellValue() != null ? country.getStringCellValue() : null, header, template);
+                countryRulesVO = countryMap.get(key.toUpperCase());
+            }
+        } else {
+            //log
+        }
+        return countryRulesVO;
     }
 
 

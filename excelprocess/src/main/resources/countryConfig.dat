@@ -1,4 +1,4 @@
-country,columnName,mandatory,lengthCheck,length,specialCharsCheck
-INDIA,PAYTRXKEY,Y,Y,20,Y
-INDIA,GROUP_ID,Y,Y,20,Y
-INDIA,FILE_NAME,Y,Y,20,Y
+country,template,columnName,mandatory,lengthCheck,length,specialCharsCheck
+HK,T1,GROUPID,Y,Y,20,Y
+HK,T1,GROUPNAME,Y,Y,20,Y
+HK,T1,BATCHREFNO,Y,Y,20,Y

@@ -42,9 +42,8 @@ public class WorkbookFactory {
     public static void writeHeaders(List<String> headerList, Sheet newSheet, Cell firstCell) {
         CellStyle sourceCellStyle = firstCell.getCellStyle();
         Row newRow = newSheet.createRow(0);
-        headerList.add("");
-        headerList.add("STATUS");
-        headerList.add("REASON FOR FAILURE");
+        headerList.add(0,"Status");
+        headerList.add(1,"Test Results - Comments");
         Iterator<String> iterator = headerList.iterator();
 
         int colNum = 0;

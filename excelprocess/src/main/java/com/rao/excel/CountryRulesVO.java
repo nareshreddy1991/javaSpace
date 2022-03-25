@@ -7,6 +7,7 @@ public class CountryRulesVO {
     private String lengthCheck;
     private Integer length;
     private String specialCharsCheck;
+    private String template;
 
     public void setCountry(String country) {
         this.country = country;
@@ -37,7 +38,7 @@ public class CountryRulesVO {
     }
 
     public String getColumnName() {
-        return columnName!=null? columnName.trim(): null;
+        return columnName != null ? columnName.trim() : null;
     }
 
     public Integer getLength() {
@@ -54,5 +55,13 @@ public class CountryRulesVO {
 
     public Boolean getSpecialCharsCheck() {
         return specialCharsCheck != null ? specialCharsCheck.equalsIgnoreCase("Y") : false;
+    }
+
+    public String getTemplate() {
+        return template != null ? template.trim() : null;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
     }
 }

@@ -41,6 +41,7 @@ public class ReadCountryRules {
         final CellProcessor[] processors = new CellProcessor[]{
                 new NotNull(),
                 new NotNull(),
+                new NotNull(),
                 new Optional(),
                 new Optional(),
                 new Optional(new ParseInt()),
