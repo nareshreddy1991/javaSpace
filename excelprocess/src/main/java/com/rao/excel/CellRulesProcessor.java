@@ -1,50 +1,54 @@
 package com.rao.excel;
 
-public class CellRulesProcessor {
-    private static final String Regex = "[ -\\/:-@\\[-\\`{-~]";//TODO common regex
+import java.util.Map;
 
-    public static Boolean validateCell(String value, CountryRulesVO rule, StringBuffer rowErrorMsg, String colName) {
+public class CellRulesProcessor {
+    private static final String Regex = "[ -\\/:-@\\[-\\`{-~]";
+
+    public static Boolean validateCell(String value, CountryRulesVO rule, StringBuffer rowErrorMsg, String colName, Boolean isSpecial
+            , Map<String, LookUpVO> lookUpMap, String template) {
         if (rule != null) {
             if (rule.getMandatory()) {
                 if (value == null || value.trim().length() == 0) {
-                    rowErrorMsg.append(colName + "-Mandatory");
+                    rowErrorMsg.append(colName + "-Mandatory, ");
                     return false;
                 }
             }
             if (rule.getLengthCheck()) {
                 if (value.trim().length() > rule.getLength()) {
-                    rowErrorMsg.append(colName + "-Length is exceeds:" + rule.getLength());
+                    rowErrorMsg.append(colName + "-Length exceeds:" + rule.getLength()+", ");
                     return false;
                 }
             }
             if (rule.getSpecialCharsCheck()) {
-                if (value.trim().matches(Regex)) {
-                    rowErrorMsg.append(colName + "-Special chars found");
+                if (value.trim().matches(Regex)) {//TODO
+                    rowErrorMsg.append(colName + "-Special chars found, ");
                     return false;
                 }
 
             }
-            return true;
-        }
-        return null;
-    }
+            if ("Y".equals(rule.getIsAmount())) {
+                Double amount = new Double(value);
+                if (amount.compareTo(rule.getMinAmount()) < 0) {
+                    rowErrorMsg.append(colName + "-amount is less than "+rule.getMinAmount()+", ");
+                    return false;
 
-    public static Boolean validateCell(Double value, CountryRulesVO rule, StringBuffer rowErrorMsg, String colName) {
-        if (rule != null) {
-            if (rule.getMandatory()) {
-                if (value == null || value == 0.0) {//TODO 0.0??
-                    rowErrorMsg.append(colName + "-Mandatory");
+                }
+                if (isSpecial) {
+                    if (amount.compareTo(new Double(50000)) > 0) {
+                        rowErrorMsg.append(colName + "-amount is greater than 50000, ");
+                        return false;
+
+                    }
+                }
+            }
+            if ("Y".equals(rule.getLookup())) {
+                LookUpVO lookUpVO = lookUpMap.get(String.join("-", template, colName));
+                if (lookUpVO != null && !lookUpVO.getValuesAsList().contains(value)) {
+                    rowErrorMsg.append(colName + "-value doesn't exists, ");
                     return false;
                 }
             }
-//            if (rule.getLengthCheck()) { //TODO NA
-//                if (value.trim().length() > rule.getLength())
-//                    return false;
-//            }
-//            if (rule.getSpecialCharsCheck()) {
-//                if (value.trim().matches(""))
-//                    return false;
-//            }
             return true;
         }
         return null;

@@ -2,7 +2,6 @@ package com.rao.excel;
 
 import org.apache.log4j.Logger;
 import org.supercsv.cellprocessor.Optional;
-import org.supercsv.cellprocessor.ParseDouble;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.constraint.NotNull;
 import org.supercsv.cellprocessor.ift.CellProcessor;
@@ -15,32 +14,29 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ReadCountryRules {
-    static Logger LOG = Logger.getLogger(ReadCountryRules.class.getName());
+public class ReadLookUpValues {
+    static Logger LOG = Logger.getLogger(ReadLookUpValues.class.getName());
 
-    public static Map<String, CountryRulesVO> loadCountryRules() {
-
-        List<CountryRulesVO> countryRulesList = new ArrayList<>();
+    public static Map<String, LookUpVO> loadLookUpMap() {
+        List<LookUpVO> lookupList = new ArrayList<>();
         ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream inputStream = classloader.getResourceAsStream("countryConfig.dat");
+        InputStream inputStream = classloader.getResourceAsStream("lookup.dat");
         InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
         try (ICsvBeanReader beanReader = new CsvBeanReader(new BufferedReader(streamReader), CsvPreference.STANDARD_PREFERENCE)) {
             final String[] headers = beanReader.getHeader(true);
             final CellProcessor[] processors = getProcessors();
-            CountryRulesVO countryRule;
-            while ((countryRule = beanReader.read(CountryRulesVO.class, headers, processors)) != null) {
-                countryRulesList.add(countryRule);
+            LookUpVO countryRule;
+            while ((countryRule = beanReader.read(LookUpVO.class, headers, processors)) != null) {
+                lookupList.add(countryRule);
             }
-            Map<String, CountryRulesVO> countryMap = countryRulesList.stream()
-                    .collect(Collectors.toMap(e -> String.join("-", e.getCountry(), e.getColumnName(), e.getTemplate()).toUpperCase(),
-                            Function.identity(), (a, b) -> a));
-            LOG.info("Country rules size:" + countryRulesList.size());
-            return countryMap;
+            LOG.info("Look up records:" + lookupList.size());
+            return lookupList.stream()
+                    .collect(Collectors.toMap(e -> String.join("-", e.getTemplate(), e.getHeader()), e -> e, (a, b) -> a));
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -49,16 +45,9 @@ public class ReadCountryRules {
 
     private static CellProcessor[] getProcessors() {
         final CellProcessor[] processors = new CellProcessor[]{
-                new Optional(),
                 new NotNull(),
                 new NotNull(),
-                new Optional(),
-                new Optional(),
-                new Optional(new ParseInt()),
-                new Optional(),
-                new Optional(),
-                new Optional(new ParseDouble()),
-                new Optional()
+                new NotNull()
         };
         return processors;
     }

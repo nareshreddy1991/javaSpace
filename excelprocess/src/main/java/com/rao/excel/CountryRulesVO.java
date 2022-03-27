@@ -8,6 +8,9 @@ public class CountryRulesVO {
     private Integer length;
     private String specialCharsCheck;
     private String template;
+    private String isAmount;
+    private Double minAmount;
+    private String lookup;
 
     public void setCountry(String country) {
         this.country = country;
@@ -34,7 +37,7 @@ public class CountryRulesVO {
     }
 
     public String getCountry() {
-        return country != null ? country.trim() : null;
+        return country != null ? country.trim() : "";
     }
 
     public String getColumnName() {
@@ -63,5 +66,29 @@ public class CountryRulesVO {
 
     public void setTemplate(String template) {
         this.template = template;
+    }
+
+    public String getIsAmount() {
+        return isAmount;
+    }
+
+    public void setIsAmount(String isAmount) {
+        this.isAmount = isAmount;
+    }
+
+    public Double getMinAmount() {
+        return minAmount;
+    }
+
+    public void setMinAmount(Double minAmount) {
+        this.minAmount = minAmount;
+    }
+
+    public String getLookup() {
+        return lookup;
+    }
+
+    public void setLookup(String lookup) {
+        this.lookup = lookup;
     }
 }
