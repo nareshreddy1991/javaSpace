@@ -65,8 +65,8 @@ public class WorkbookFactory {
         CellStyle targetCellStyle = target.getSheet().getWorkbook().createCellStyle();
         targetCellStyle.cloneStyleFrom(sourceCellStyle);
         if (status != null && !status) {
-            targetCellStyle.setFillBackgroundColor(IndexedColors.GREEN.getIndex());
-            targetCellStyle.setFillPattern(FillPatternType.SQUARES);
+            targetCellStyle.setFillForegroundColor(IndexedColors.GREEN.getIndex());
+            targetCellStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         }
         target.setCellStyle(targetCellStyle);
     }

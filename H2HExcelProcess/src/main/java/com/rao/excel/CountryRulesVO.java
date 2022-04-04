@@ -1,7 +1,7 @@
 package com.rao.excel;
 
 public class CountryRulesVO {
-    private String country;
+    private String country;//field name should be same as column name in the countryConfig.dat file
     private String columnName;
     private String mandatory;
     private String lengthCheck;
@@ -10,7 +10,23 @@ public class CountryRulesVO {
     private String template;
     private String isAmount;
     private Double minAmount;
+    private Double maxAmount;
     private String lookup;
+    public CountryRulesVO(){}
+
+    public CountryRulesVO(String country, String columnName, String mandatory, String lengthCheck, Integer length, String specialCharsCheck, String template, String isAmount, Double minAmount, Double maxAmount, String lookup) {
+        this.country = country;
+        this.columnName = columnName;
+        this.mandatory = mandatory;
+        this.lengthCheck = lengthCheck;
+        this.length = length;
+        this.specialCharsCheck = specialCharsCheck;
+        this.template = template;
+        this.isAmount = isAmount;
+        this.minAmount = minAmount;
+        this.maxAmount = maxAmount;
+        this.lookup = lookup;
+    }
 
     public void setCountry(String country) {
         this.country = country;
@@ -52,6 +68,16 @@ public class CountryRulesVO {
         return mandatory != null ? mandatory.equalsIgnoreCase("Y") : false;
     }
 
+    public String getMandatoryVal(){
+        return mandatory;
+    }
+    public String getLengthCheckVal(){
+        return lengthCheck;
+    }
+    public String getSpecialCharsCheckVal(){
+        return specialCharsCheck;
+    }
+
     public Boolean getLengthCheck() {
         return lengthCheck != null ? lengthCheck.equalsIgnoreCase("Y") : false;
     }
@@ -90,5 +116,13 @@ public class CountryRulesVO {
 
     public void setLookup(String lookup) {
         this.lookup = lookup;
+    }
+
+    public Double getMaxAmount() {
+        return maxAmount;
+    }
+
+    public void setMaxAmount(Double maxAmount) {
+        this.maxAmount = maxAmount;
     }
 }

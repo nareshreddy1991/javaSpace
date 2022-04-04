@@ -1,5 +1,7 @@
 package com.rao.excel;
 
+import com.rao.excel.validation.SpecialValidation;
+import com.rao.excel.validation.ValidationFactory;
 import org.apache.log4j.Logger;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -21,7 +23,7 @@ public class ReadExcel {
             Map<String, CountryRulesVO> countryMap = ReadCountryRules.loadCountryRules();
             Map<String, LookUpVO> lookUpMap = ReadLookUpValues.loadLookUpMap();
 
-            File[] files = listFiles();
+            File[] files = listFiles();//TODO remove file
             LOG.info("files found in inbound:" + files.length);
             for (File file : files) {
                 try {
@@ -36,7 +38,7 @@ public class ReadExcel {
                         Sheet newSheet = newWorkbook.createSheet(sheet.getSheetName());
 
                         Iterator<Row> rowIterator = sheet.iterator();
-                        Row headerRow = rowIterator.next();
+                        Row headerRow = rowIterator.next();//Headers should be at the first row
                         List<String> headerList = getHeaders(headerRow);
                         LOG.info("Total headers:" + headerList.size());
                         int statusColPosition = 0;
@@ -53,7 +55,7 @@ public class ReadExcel {
                                 CountryRulesVO countryRulesVO = getCountryRules(headerList, header, countryMap, row);
                                 Cell cell = row.getCell(colNum - 2);
                                 if (cell == null) {
-                                    return;
+                                    continue;
                                 }
                                 Cell newCell = newRow.createCell(colNum);
                                 Boolean cellResult = null;
@@ -63,23 +65,15 @@ public class ReadExcel {
                                         break;
                                     case STRING:
                                     default:
-                                        Boolean isSpecial = false;
                                         String template = getTemplate(headerList);
-                                        if (countryRulesVO != null && "Y".equals(countryRulesVO.getIsAmount())) {
-                                            int paymentTypeIndex;
-                                            if ("T1".equals(template))
-                                                paymentTypeIndex = headerList.indexOf("PAYMENTTYPE") - 2;
-                                            else
-                                                paymentTypeIndex = headerList.indexOf("PAYMENT TYPE") - 2;
-                                            Cell neftCell = row.getCell(paymentTypeIndex);
-                                            if (neftCell != null && "NEFT".equalsIgnoreCase(neftCell.getStringCellValue())) {
-                                                isSpecial = true;
-                                            }
+                                        SpecialValidation validator = ValidationFactory.getValidator(template, header);
+                                        if (validator != null) {
+                                            cellResult = validator.validate(row, header, cell.getStringCellValue(), headerList, rowErrorMsg, lookUpMap, template);
+                                        } else {
+                                            cellResult = CellRulesProcessor.validateCell(cell.getStringCellValue(), countryRulesVO, rowErrorMsg, header, lookUpMap, template);
                                         }
-                                        cellResult = CellRulesProcessor.validateCell(cell.getStringCellValue(), countryRulesVO, rowErrorMsg, header, isSpecial, lookUpMap, template);
                                         newCell.setCellValue(cell.getStringCellValue());
                                         break;
-
                                 }
                                 WorkbookFactory.cloneStyle(cell, newCell, cellResult);
                                 if (cellResult != null && (rowStatus == null || rowStatus)) {
@@ -87,9 +81,10 @@ public class ReadExcel {
                                 }
                             }
                             Cell statusCell = newRow.createCell(statusColPosition);
-                            WorkbookFactory.formatCell(statusCell, null);
+//                            WorkbookFactory.formatCell(statusCell, null);
                             if (rowStatus != null) {
-                                statusCell.setCellValue(rowStatus ? "SUCCESS" : "FAILED");
+                                statusCell.setCellValue(rowStatus ? "Success" : "Failed");
+                                rowErrorMsg.append("1. Payment looks okay for processing <br/> 2. Please ensure..");
                             } else {
                                 statusCell.setCellValue("NA");//if no rules are defined for any columns
                             }
@@ -98,6 +93,7 @@ public class ReadExcel {
                         }
                     }
                     WorkbookFactory.writeWorkbook(newWorkbook, file);
+                    file.delete();
                 } catch (Exception e) {
                     e.printStackTrace();
                     LOG.error("Something went wrong", e);
@@ -132,13 +128,13 @@ public class ReadExcel {
             template = "T3";
         }
         CountryRulesVO countryRulesVO = null;
-        if (position > 0) {
+        if (position > 0) {//T1 T2 logic
             Cell country = row.getCell(position - 2);
             if (country != null) {
                 String key = String.join("-", country.getStringCellValue() != null ? country.getStringCellValue() : null, header, template);
                 countryRulesVO = countryMap.get(key.toUpperCase());
             }
-        } else {
+        } else {//T3
             String key = String.join("-", "", header, template);
             countryRulesVO = countryMap.get(key.toUpperCase());
         }

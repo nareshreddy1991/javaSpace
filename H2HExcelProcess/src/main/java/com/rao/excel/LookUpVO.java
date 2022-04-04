@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class LookUpVO {
+    private String country;
     private String template;
     private String header;
     private String values;
@@ -36,6 +37,14 @@ public class LookUpVO {
                 .split("[|]");
         valuesAsList = Stream.of(split).collect(Collectors.toList());
         this.values = values;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public List<String> getValuesAsList() {

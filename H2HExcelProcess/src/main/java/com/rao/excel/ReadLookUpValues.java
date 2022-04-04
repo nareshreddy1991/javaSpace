@@ -36,7 +36,7 @@ public class ReadLookUpValues {
             }
             LOG.info("Look up records:" + lookupList.size());
             return lookupList.stream()
-                    .collect(Collectors.toMap(e -> String.join("-", e.getTemplate(), e.getHeader()), e -> e, (a, b) -> a));
+                    .collect(Collectors.toMap(e -> String.join("-", e.getCountry(),e.getTemplate(), e.getHeader()), e -> e, (a, b) -> a));
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -45,6 +45,7 @@ public class ReadLookUpValues {
 
     private static CellProcessor[] getProcessors() {
         final CellProcessor[] processors = new CellProcessor[]{
+                new Optional(),
                 new NotNull(),
                 new NotNull(),
                 new NotNull()

@@ -34,7 +34,7 @@ public class ReadCountryRules {
             final CellProcessor[] processors = getProcessors();
             CountryRulesVO countryRule;
             while ((countryRule = beanReader.read(CountryRulesVO.class, headers, processors)) != null) {
-                countryRulesList.add(countryRule);
+                countryRulesList.addAll(formatCountry(countryRule));
             }
             Map<String, CountryRulesVO> countryMap = countryRulesList.stream()
                     .collect(Collectors.toMap(e -> String.join("-", e.getCountry(), e.getColumnName(), e.getTemplate()).toUpperCase(),
@@ -47,6 +47,23 @@ public class ReadCountryRules {
         }
     }
 
+    private static List<CountryRulesVO> formatCountry(CountryRulesVO c) {
+        List<CountryRulesVO> list = new ArrayList<>();
+        if (c.getCountry().contains("|")) {
+            String[] countryArray = c.getCountry().split("[|]");
+            for (String country : countryArray) {
+                if (country != null && country != "") {
+                    CountryRulesVO rule = new CountryRulesVO(country, c.getColumnName(), c.getMandatoryVal(), c.getLengthCheckVal(), c.getLength()
+                            , c.getSpecialCharsCheckVal(), c.getTemplate(), c.getIsAmount(), c.getMinAmount(), c.getMaxAmount(), c.getLookup());
+                    list.add(rule);
+                }
+            }
+        } else {
+            list.add(c);
+        }
+        return list;
+    }
+
     private static CellProcessor[] getProcessors() {
         final CellProcessor[] processors = new CellProcessor[]{
                 new Optional(),
@@ -57,6 +74,7 @@ public class ReadCountryRules {
                 new Optional(new ParseInt()),
                 new Optional(),
                 new Optional(),
+                new Optional(new ParseDouble()),
                 new Optional(new ParseDouble()),
                 new Optional()
         };
