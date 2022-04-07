@@ -17,6 +17,8 @@ public class ValidationFactory {
                 return new PurposeCodeValidation();
             } else if ("SUBPYMTTYPE".equalsIgnoreCase(colName)) {
                 return new SubPaymentTypeValidation();
+            }else if("CUSTOMERREFNO".equalsIgnoreCase(colName)){
+                return new UniqueValidation();
             }
         } else if ("T1".equals(template)) {
             if ("BENEBANKCODE".equalsIgnoreCase(colName)) {
@@ -29,6 +31,8 @@ public class ValidationFactory {
                 return new PurposeCodeValidation();
             } else if ("SUBPYMTTYPE".equalsIgnoreCase(colName)) {
                 return new SubPaymentTypeValidation();
+            }else if("CUSTOMERREFNO".equalsIgnoreCase(colName)){
+                return new UniqueValidation();
             }
         }
         return null;

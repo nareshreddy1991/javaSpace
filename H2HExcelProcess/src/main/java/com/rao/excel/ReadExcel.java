@@ -1,5 +1,6 @@
 package com.rao.excel;
 
+import com.rao.excel.validation.UniqueValidation;
 import com.rao.excel.validation.SpecialValidation;
 import com.rao.excel.validation.ValidationFactory;
 import org.apache.log4j.Logger;
@@ -23,7 +24,7 @@ public class ReadExcel {
             Map<String, CountryRulesVO> countryMap = ReadCountryRules.loadCountryRules();
             Map<String, LookUpVO> lookUpMap = ReadLookUpValues.loadLookUpMap();
 
-            File[] files = listFiles();//TODO remove file
+            File[] files = listFiles();
             LOG.info("files found in inbound:" + files.length);
             for (File file : files) {
                 try {
@@ -69,7 +70,8 @@ public class ReadExcel {
                                         SpecialValidation validator = ValidationFactory.getValidator(template, header);
                                         if (validator != null) {
                                             cellResult = validator.validate(row, header, cell.getStringCellValue(), headerList, rowErrorMsg, lookUpMap, template);
-                                        } else {
+                                        }
+                                        if (cellResult == null || cellResult) {//check for other validation
                                             cellResult = CellRulesProcessor.validateCell(cell.getStringCellValue(), countryRulesVO, rowErrorMsg, header, lookUpMap, template);
                                         }
                                         newCell.setCellValue(cell.getStringCellValue());
@@ -84,16 +86,18 @@ public class ReadExcel {
 //                            WorkbookFactory.formatCell(statusCell, null);
                             if (rowStatus != null) {
                                 statusCell.setCellValue(rowStatus ? "Success" : "Failed");
-                                rowErrorMsg.append("1. Payment looks okay for processing <br/> 2. Please ensure..");
+                                if (rowStatus)
+                                    rowErrorMsg.append("1. Payment looks okay for processing <br/> 2. Please ensure..");//TODO fill complete msg
                             } else {
                                 statusCell.setCellValue("NA");//if no rules are defined for any columns
                             }
                             Cell commentCell = newRow.createCell(statusColPosition + 1);
                             commentCell.setCellValue(rowErrorMsg.toString());
                         }
+                        new UniqueValidation().reset();
                     }
                     WorkbookFactory.writeWorkbook(newWorkbook, file);
-                    file.delete();
+//                    file.delete();
                 } catch (Exception e) {
                     e.printStackTrace();
                     LOG.error("Something went wrong", e);
