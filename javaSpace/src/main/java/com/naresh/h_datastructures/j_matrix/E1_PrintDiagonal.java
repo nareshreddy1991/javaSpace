@@ -13,6 +13,16 @@ public class E1_PrintDiagonal {
         printDiagonalNegativeSlop(a);
     }
 
+    /*
+    Output:
+        1
+        7 2
+        13 8 3
+        24 14 9 4
+        23 15 10
+        22 16
+        21
+     */
     private static void printDiagonalPositiveSlop(int[][] a) {
         int m = a.length;
         int n = a[0].length;
@@ -50,7 +60,7 @@ public class E1_PrintDiagonal {
         }
 
         for (int i = 1; i < m; i++) {
-            int row = i, col = n-1;
+            int row = i, col = n - 1;
             while (row < m && col >= 0) {
                 System.out.print(a[row][col] + " ");
                 row++;
