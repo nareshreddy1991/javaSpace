@@ -136,6 +136,11 @@ while pushing - (value*dummy)+min
 while pop - totalVal/dummy;
 getMin - totalVal%dummy; (just reminder)
 
+Ex: vaue 100 dummy 5
+push 100*5+10=510
+value 500/5=100
+min 500%5=10
+
  */
 class CustomStack1 extends Stack<Integer> {
 

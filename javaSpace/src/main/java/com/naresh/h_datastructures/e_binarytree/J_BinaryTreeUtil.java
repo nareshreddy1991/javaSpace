@@ -17,6 +17,7 @@ public class J_BinaryTreeUtil {
         System.out.println("min:" + bt.min(bt.root).data);
         System.out.println("min in BST:" + bt.minInBST(bt.root).data);
         System.out.println("max in BST:" + bt.maxInBST(bt.root).data);
+        System.out.println("min in BT:" + bt.findMinInBT(bt.root));
     }
 }
 
@@ -41,12 +42,13 @@ class BT5 {
         else return rh + 1;
     }
 
-    public int height2(Node node){
-        if(node == null)
+    public int height2(Node node) {
+        if (node == null)
             return 0;
-        return 1+ Math.max(height2(node.left), height2(node.right));
+        return 1 + Math.max(height2(node.left), height2(node.right));
     }
 
+    //TODO not a good approach, since we are using ourter variables
     Node temp = null;
 
     public Node min(Node node) {
@@ -58,6 +60,30 @@ class BT5 {
         return temp;
     }
 
+    //Travel inoder/any order and find the Min(node.data, left.data, right.data)
+    public int min2(Node node) {
+        if (node == null)
+            return Integer.MIN_VALUE;
+        int left = min2(node.left);
+        int right = min2(node.right);
+        int result = node.data;
+        if (left < result)
+            result = left;
+        if (right < result)
+            result = right;
+        return result;
+    }
+
+    //Travel inoder/any order and find the Min(node.data, left.data, right.data)
+    public int max2(Node node) {
+        if (node == null)
+            return Integer.MIN_VALUE;
+        int left = max2(node.left);
+        int right = max2(node.right);
+        int result = node.data;
+        return Math.max(Math.max(left, right), result);
+    }
+
     public Node minInBST(Node node) {
         if (node == null)
             return null;
@@ -65,6 +91,7 @@ class BT5 {
             node = node.left;
         return node;
     }
+
     public Node maxInBST(Node node) {
         if (node == null)
             return null;
@@ -73,8 +100,20 @@ class BT5 {
         return node;
     }
 
+    //TODO find min/max element in BT
+    //THe mess
+    public int findMinInBT(Node node) {
+        if (node == null)
+            return Integer.MAX_VALUE;
+        int leftMin = findMinInBT(node.left);
+        int rightMin = findMinInBT(node.right);
+        return Math.min(leftMin, rightMin);
+
+    }
+
     int count = 0;
 
+    //TODO poor logic
     public int count(Node node) {
         if (node == null)
             return 0;
@@ -82,5 +121,17 @@ class BT5 {
         count++;
         count(node.right);
         return count;
+    }
+
+    public int count2(Node node) {
+        if (node == null)
+            return 0;
+        return 1 + count2(node.left) + count2(node.right);
+    }
+
+    public int sumOfAllElementsInBT(Node node) {
+        if (node == null)
+            return 0;
+        return node.data + sumOfAllElementsInBT(node.left) + sumOfAllElementsInBT(node.right);
     }
 }

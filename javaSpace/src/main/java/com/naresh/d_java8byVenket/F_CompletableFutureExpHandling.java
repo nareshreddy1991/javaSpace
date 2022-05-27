@@ -32,7 +32,8 @@ public class F_CompletableFutureExpHandling {
         //cf.orTimeout(2, TimeUnit.SECONDS) //throws CompletionException
 
         //TODO handle
-        CompletableFuture completableFuture = CompletableFuture.supplyAsync(() -> Integer.parseInt("s")).handle((result, e) -> { //recovered from the exception conditionally
+        CompletableFuture completableFuture = CompletableFuture.supplyAsync(() -> Integer.parseInt("s"))
+                .handle((result, e) -> { //recovered from the exception conditionally
             if (e != null) {
                 System.out.println(e.getMessage());
                 return "Error!";

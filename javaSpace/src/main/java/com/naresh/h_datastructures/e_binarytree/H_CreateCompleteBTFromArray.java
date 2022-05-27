@@ -37,6 +37,7 @@ class CBT {
     }
 
     //TODO incomplete
+    // 1 2 3 4 5 6
     public Node createCompleteBTWithoutRecursion(int[] array) {
 
         Node node = new Node(array[0]);

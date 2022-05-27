@@ -1,6 +1,6 @@
-package com.naresh.h_datastructures.a_array;
+package com.naresh.h_datastructures.a_recursion;
 
-public class A_Recursion {
+public class A1_Recursion {
     public static void main(String[] args) {
         recursion1(2, 12);
     }

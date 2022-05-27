@@ -101,7 +101,7 @@ class CircularSingleLinkedList {
                 }
                 break;
             }
-            previous=curr;
+            previous = curr;
             curr = curr.next;
         }
     }
@@ -125,5 +125,13 @@ class CircularSingleLinkedList {
             System.out.println(curr.data);
             curr = curr.next;
         } while (curr != last.next);
+
+    /* TODO last element is not printing
+    Node curr = last.next;
+        System.out.println("Print in another approach");
+        while(curr.next!=last.next){
+            System.out.print(curr.data+" ");
+            curr=curr.next;
+        }*/
     }
 }

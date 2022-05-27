@@ -1,5 +1,6 @@
 package com.naresh.h_datastructures.e_binarytree;
 
+import java.util.Iterator;
 import java.util.Stack;
 
 /*
@@ -70,7 +71,7 @@ public class A_BinaryTree {
         inOrderTraversal.root.left.left = new Node(4);
         inOrderTraversal.root.left.right = new Node(5);
         System.out.println("with out recursion");
-        inOrderTraversal.inOrder();
+        inOrderTraversal.postOrder();
     }
 }
 
@@ -102,7 +103,7 @@ class BinaryTree {
     }
 
     void printPreorder() {
-        preOrder(root);
+        System.out.println("Total sum:" + preOrderSum(root));
     }
 
     public void preOrder(Node node) {
@@ -111,6 +112,30 @@ class BinaryTree {
         System.out.println(node.data);
         preOrder(node.left);
         preOrder(node.right);
+    }
+
+    //Find sum of all elements
+    //TODO the mess I have written
+    public int preOrder(Node node, int sum) {
+        if (node == null)
+            return 0;
+        System.out.println(node.data + " sum:" + sum);
+        sum += node.data;
+        sum += preOrder(node.left, sum);
+        sum += preOrder(node.right, sum);
+        return sum;
+    }
+
+    public int preOrderSum(Node node) {
+        if (node == null)
+            return 0;
+        return node.data + preOrderSum(node.left) + preOrderSum(node.right);
+    }
+
+    public int preOrderCount(Node node) {
+        if (node == null)
+            return 0;
+        return 1 + preOrderCount(node.left) + preOrderCount(node.right);
     }
 
     public void inOrder(Node node) {
@@ -130,7 +155,7 @@ class BinaryTree {
     }
 }
 
-//without recurssion
+//without recurssion (In order)
 /*
 Algorithm:
 1) Create an empty stack S.
@@ -158,4 +183,48 @@ class BinaryTreeInOrderTraversal {
             curr = pop.right;
         }
     }
+
+    public void preOrder() {
+        Stack<Node> stack = new Stack<>();
+        Node curr = root;
+        stack.push(curr);
+        while (!stack.empty()) {
+            Node pop = stack.pop();
+            System.out.print(pop.data + " ");
+            Node right = pop.right;
+            if (right != null)
+                stack.push(right);
+            Node left = pop.left;
+            if (left != null)
+                stack.push(left);
+        }
+    }
+
+    //Level order with stack + move the popped elements to other stack + print it
+    //O(n) O(2h)
+    public void postOrder() {
+        Stack<Node> stack1 = new Stack<>();
+        Stack<Node> stack2 = new Stack<>();
+        stack1.add(root);
+        while (!stack1.empty()) {
+            Node pop = stack1.pop();
+            stack2.add(pop);
+            if (pop.left != null)
+                stack1.add(pop.left);
+            if (pop.right != null)
+                stack1.add(pop.right);
+        }
+        //in stack iterator prints the data from bottom to top
+//        Iterator<Node> iterator = stack2.iterator();
+//        while (iterator.hasNext()) {
+//            System.out.print(iterator.next().data + " ");
+//        }
+        //print top to bottom
+        while (!stack2.empty()){
+            System.out.print(stack2.pop().data+" ");
+        }
+    }
+
+    //TODO postorder with single stack
+    //todo postorder with no stack/hashSet
 }
