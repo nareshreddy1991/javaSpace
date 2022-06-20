@@ -23,7 +23,7 @@ public class B7_CombinationSum2 {
             result.add(new ArrayList<>(ds));
             return;
         }
-        for (int i = index; i < a.length; i++) {
+        for (int i =  index; i < a.length; i++) {
             if (i > index && a[i] == a[i - 1])//from the second element if any repeated elements just ignore it
                 continue;
             if (a[i] > target)//since elements are in sorted order,  just optimization

@@ -117,8 +117,10 @@ class CarCompany {
 class BmwCarCompany extends CarCompany {
     protected String name = "BMW";
 
+
     public BmwCarCompany() {// by default it called the parent class default constructor
 //        super(); TODO optional
+        super.name="";
         System.out.println("BMW Constructor");
     }
 

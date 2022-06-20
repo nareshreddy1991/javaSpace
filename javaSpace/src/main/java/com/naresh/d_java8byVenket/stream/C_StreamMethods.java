@@ -23,6 +23,9 @@ public class C_StreamMethods {
                         Collectors.collectingAndThen(
                                 Collectors.joining(), e -> "*" + e + "*"
                         )));
+        integerList.stream()
+                .sorted(Comparator.naturalOrder())
+                .findFirst();
 
 
         //mapping

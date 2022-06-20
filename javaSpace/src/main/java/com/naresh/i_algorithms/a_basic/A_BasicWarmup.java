@@ -18,6 +18,8 @@ public class A_BasicWarmup {
         System.out.println(0 / 2);//0
         System.out.println(4 % 5);//(1%2-1, 2%3-2, 4%5-4)
         System.out.println(0 % 2);//0
+        System.out.println("10s digit:"+(254865 % 100) / 10);//TODO 6
+        //TODO find a number divisible by x input%x==0 then its divisible
 
         System.out.println("even or odd");
         int number = 23;

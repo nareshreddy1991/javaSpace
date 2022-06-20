@@ -63,7 +63,9 @@ public class A_HashMap {
         }
         System.out.println(mapList);
         /*
-        Important part here is that if the mappingFunction produces a null value then Map is not modified at all. Also don’t try to modify Map using mappingFunction. If you are modifying Map using mappingFunction you are using mappingFunction wrong. Try using the putIfAbsent method.
+        Important part here is that if the mappingFunction produces a null value then Map is not modified at all.
+         Also don’t try to modify Map using mappingFunction. If you are modifying Map using mappingFunction you are using mappingFunction wrong.
+         Try using the putIfAbsent method.
          */
 
         /*TODO computeIfPresent

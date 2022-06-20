@@ -26,7 +26,7 @@ class EagerInitializedSingleton {
     private static final EagerInitializedSingleton instance = new EagerInitializedSingleton();//can't handle exception
 
     //private constructor to avoid client applications to use constructor
-    private EagerInitializedSingleton() {
+    private EagerInitializedSingleton() /*throws Exception*/{ //TODO u can throw exception
     }
 
     public static EagerInitializedSingleton getInstance() {

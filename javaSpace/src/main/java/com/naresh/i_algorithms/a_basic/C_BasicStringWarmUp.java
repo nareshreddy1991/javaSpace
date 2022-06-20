@@ -49,7 +49,5 @@ public class C_BasicStringWarmUp {
         while(!stack.empty()){
             System.out.print(stack.pop());
         }
-
-
     }
 }
